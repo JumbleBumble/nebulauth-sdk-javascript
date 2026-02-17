@@ -1,0 +1,42 @@
+{
+  "name": "nebulauth-sdk-js",
+  "version": "0.1.0",
+  "description": "JavaScript SDK for NebulAuth runtime API with TypeScript support",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "test": "vitest run",
+    "test:live": "vitest run src/index.live.test.ts",
+    "test:all": "npm run test && npm run test:live",
+    "prepublishOnly": "npm run build"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "nebulauth",
+    "sdk",
+    "typescript",
+    "javascript"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.6",
+    "vitest": "^2.1.9",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
