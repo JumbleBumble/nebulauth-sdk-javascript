@@ -351,3 +351,5 @@ export class NebulAuthClient {
     return new URL(endpoint.replace(/^\//, ''), base).toString()
   }
 }
+
+export * from './dashboard'

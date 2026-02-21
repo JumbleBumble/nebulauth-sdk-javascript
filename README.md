@@ -22,8 +22,6 @@ npm install /absolute/path/to/NebulAuth\ SDKs/Javascript/Typescript
 import { NebulAuthClient } from 'nebulauth-sdk-js'
 
 const client = new NebulAuthClient({
-  // baseUrl defaults to https://api.nebulauth.com/api/v1
-  // baseUrl: 'https://api.nebulauth.com/api/v1',
   bearerToken: 'mk_at_...',
   signingSecret: 'mk_sig_...',
   serviceSlug: 'your-service',
@@ -53,7 +51,6 @@ const reset = await client.resetHwid({
 import { NebulAuthClient, type VerifyKeyInput } from 'nebulauth-sdk-js'
 
 const client = new NebulAuthClient({
-  // baseUrl: 'https://api.nebulauth.com/api/v1',
   bearerToken: 'mk_at_...',
   signingSecret: 'mk_sig_...',
   serviceSlug: 'your-service',
@@ -66,6 +63,34 @@ const payload: VerifyKeyInput = {
 
 const result = await client.verifyKey(payload)
 console.log(result.statusCode, result.data)
+```
+
+## Dashboard API usage
+
+```ts
+import {
+  NebulAuthDashboardClient,
+  type DashboardRequestOptions,
+} from 'nebulauth-sdk-js'
+
+const dashboard = new NebulAuthDashboardClient({
+  auth: {
+    mode: 'bearer',
+    bearerToken: 'mk_at_...',
+  },
+})
+
+const me = await dashboard.me()
+const users = await dashboard.listUsers()
+
+const sessionOpts: DashboardRequestOptions = {
+  auth: {
+    mode: 'session',
+    sessionCookie: 'session-cookie-value',
+  },
+}
+
+await dashboard.analyticsSummary(30, sessionOpts)
 ```
 
 ## PoP flow
@@ -109,4 +134,15 @@ NEBULAUTH_TEST_KEY=mk_live_... \
 npm run test:live
 ```
 
-Optional: `NEBULAUTH_BASE_URL=...`, `NEBULAUTH_TEST_HWID=...`
+Live test env vars:
+
+- Required to enable live tests:
+  - `NEBULAUTH_LIVE_TEST=1`
+- Required for runtime live tests:
+  - `NEBULAUTH_BEARER_TOKEN`
+  - `NEBULAUTH_SIGNING_SECRET`
+  - `NEBULAUTH_TEST_KEY`
+- Required for dashboard live test:
+  - `NEBULAUTH_DASHBOARD_BEARER_TOKEN`
+- Optional:
+  - `NEBULAUTH_TEST_HWID`
